@@ -1,54 +1,42 @@
-function lab1(N)
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Computacao evolucionaria - lab1                                         %
+% Integrantes: Davi Viana e Rafael Castro                                 %
+%                                                                         %
+% Algoritmo genetico que obtem uma solucao para o problema das N rainhas  %
+% Exemplo de uso: lab1(10, 100) resolve o problema para 10 rainhas com    %
+% uma populacao de tamanho 100                                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function lab1(N, pop_size)
     pop_count = 1;
-    M = 0.1*factorial(N);
+    p_mutation= 0.8;
     
-    population = zeros(M, N);
-    fits = zeros(1, M);
-    for i=1:M
+    % inicializa populacao e obtem qualidade
+    population = zeros(pop_size, N);
+    quality = zeros(pop_size, 1);
+    for i=1:pop_size
         population(i,:) = randperm(N);
-        fits(i) = fitness_nq(population(i,:));
+        quality(i) = fitness_nq(population(i,:));
     end
-    best(pop_count) = min(fits);
-    mn(pop_count) = mean(fits);
+    best(pop_count) = min(quality);
+    middle(pop_count) = mean(quality);
 
-%TODO: corrigir critério de parada.
-    while sum(fits) > 0
-        parents = get_parents(population, fits, M);
+    while (min(best)~=0)
+        % obtem os pais e os filhos da nova geracao
+        parents = get_parents(population, quality, pop_size);
+        sons = CutAndCrossfill_Crossover(parents);
+        
+        % executa mutacao caso ocorra (probabilidade)
+        if(have_mutation(p_mutation))
+            sons = mutate(sons, N);
+        end
+        
+        n_sons = 2;
+        [population, quality] = get_survivors(population, quality, sons, n_sons);
         
         pop_count=pop_count+1;
-%TODO: atualizar best e mn.
-    end
-    
-end
-
-% Obtém dois indivíduos para o crossover.
-function [parents] = get_parents(population, fits, M)
-    parent_index = zeros(1,5);
-    % Inicializando com os piores indivíduos da população.
-    best_parents = [find(fits==max(fits), 1), find(fits==max(fits), 1)];
-    
-    % Selecionando cinco indivíduos e os dois melhores entre eles.
-    for i=1:5
-        % Garantindo que o indivíduo atual ainda não foi avaliado.
-        temp = round(1+rand(1)*(M-1));
-        while ismember(temp, parent_index)
-            temp = round(1+rand(1)*(M-1));
-        end
-        parent_index(i) = temp;
+        best(pop_count) = min(quality);
+        middle(pop_count) = mean(quality);
         
-        % O melhor entre os dois melhores ficará em primeiro.
-        if fits(parent_index(i)) <= fits(best_parents(1))
-            % Passa o primeiro para segundo.
-            best_parents(2) = best_parents(1);
-            % Substitui o primeiro.
-            best_parents(1) = parent_index(i);
-        elseif fits(parent_index(i)) <= fits(best_parents(2))
-            % Substitui o segundo.
-            best_parents(2) = parent_index(i);
-        end
     end
-    
-    parents = [population(best_parents(1),:); population(best_parents(2),:)];
+    plot(1:pop_count, best, '.', 1:pop_count, middle, '.');
 end
-    
