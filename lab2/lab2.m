@@ -20,4 +20,6 @@ function lab2(pop_size)
 end
 
 % Roleta:
-% 
+% cumProb=cumsum(vec_probs) = somatório cumulativo para os intervalos da roleta
+% [~,pai1]=histc(rand(1,cumProb)) = sorteio no histograma que tende pra baixo
+% como retorna 0, tem que somar 1 para criar o índice.
