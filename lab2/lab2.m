@@ -22,15 +22,21 @@ function lab2(pop_size, n_int)
     pop_count = pop_count + 1;
     
     for i=1:n_int
-        parents = parent_selection_roulette(quality, population, pop_size);
+        %parents = parent_selection_roulette(quality, population, pop_size);
+        parents = zeros(pop_size, N);
+        for j=1:2:(pop_size-1)
+            temp = get_parents(population, quality, pop_size);
+            parents(j,:) = temp(1);
+            parents(j+1,:) = temp(2);
+        end
         children = zeros(pop_size, N);
         for j=1:2:(pop_size-1)
             [children(j,:), children(j+1,:)] = crossover_one_cut(parents(j,:), parents(j+1,:), pc);
         end
         children = bit_flip_mutation(children, pop_size, m_prob);
         population = children;
-        for i=1:pop_size
-            quality(i) = fitness_ksp(population(i,:), values, weights, cap); 
+        for j=1:pop_size
+            quality(j) = fitness_ksp(population(j,:), values, weights, cap); 
         end
         best(pop_count) = max(quality);
         middle(pop_count) = mean(quality);
