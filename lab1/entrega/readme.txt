@@ -1,6 +1,6 @@
 Integrantes do grupo:
-Davi Pinheiro Viana - 2013029912
-Rafael Carneiro de Castro - 
+Davi Pinheiro Viana
+Rafael Carneiro de Castro
 
 Para executar basta executar 
 
