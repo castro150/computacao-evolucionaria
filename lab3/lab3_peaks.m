@@ -33,7 +33,7 @@ while((generation <= max_generations) && (mean(history) > 1e-3 || generation < 6
          if((mu <= C)||(j == delta))
              vector_differences(j,i) = x(j,r1)+F*(x(j,r2)-x(j,r3));
          else
-             vector_differences(j,i)=x(j,i);
+             vector_differences(j,i) = x(j,i);
          end
       end
 
@@ -43,7 +43,7 @@ while((generation <= max_generations) && (mean(history) > 1e-3 || generation < 6
           x_new(:,i) = x(:,i);
       end
 
-      x(:,i)=x_new(:,i);
+      x(:,i) = x_new(:,i);
    end
-   generation=generation+1;
+   generation = generation+1;
 end

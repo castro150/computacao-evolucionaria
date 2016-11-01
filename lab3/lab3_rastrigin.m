@@ -15,7 +15,7 @@ while((generation <= max_generations) && (mean(history) > 1e-3 || generation < 6
    for k=1:N
       jP(k) = rastrigin(x(:,k)); 
    end
-   history(mod(generation,5)+1,1)= max(jP) - min(jP);
+   history(mod(generation,5)+1,1) = max(jP) - min(jP);
    plotar(@rastrigin,[-2 -2],[2 2],generation,x,jP);
    
    for i=1:N
@@ -25,22 +25,22 @@ while((generation <= max_generations) && (mean(history) > 1e-3 || generation < 6
       r3 = randi(N,1);
       delta = randi(n,1);
       
-      mu=rand(1);
+      mu = rand(1);
       for j = 1:n
          if((mu <= C)||(j == delta))
-             vector_differences(j,i)=x(j,r1)+F*(x(j,r2)-x(j,r3));
+             vector_differences(j,i) = x(j,r1)+F*(x(j,r2)-x(j,r3));
          else
-             vector_differences(j,i)=x(j,i);
+             vector_differences(j,i) = x(j,i);
          end
       end
 
-      if(rastrigin(vetor_dif(:,i))<=rastrigin(x(:,i)))
-          x_new(:,i)=vetor_dif(:,i);
+      if(rastrigin(vector_differences(:,i)) <= rastrigin(x(:,i)))
+          x_new(:,i) = vector_differences (:,i);
       else
-          x_new(:,i)=x(:,i);
+          x_new(:,i) = x(:,i);
       end
       
-      x(:,i)=x_new(:,i);
+      x(:,i) = x_new(:,i);
    end
-   generation=generation+1;
+   generation = generation+1;
 end
