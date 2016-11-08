@@ -8,7 +8,7 @@ C = 0.8;
 F = 0.9;
 
 % Inicializa x entre -3 e 3
-x = -6.*rand(n,N) - 3;
+x = 6.*rand(n,N) - 3;
 x_new = zeros(n,N);
 
 vector_differences = zeros(n,N);
