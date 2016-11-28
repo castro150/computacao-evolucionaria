@@ -10,7 +10,7 @@ function [makespan, sequence, avg_fit, best_fit] = JSSP(filename)
     best_fit    = zeros(1,pop_size);
     population  = pop_ini(norders,pop_size);
     new_pop     = zeros(pop_size,norders);
-    mutant_pop     = zeros(pop_size,norders);
+    mutant_pop  = zeros(pop_size,norders);
     max_gen     = 500;
     
     % Parametros do algoritmo de evolucao diferencial
