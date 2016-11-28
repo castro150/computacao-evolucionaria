@@ -1,4 +1,4 @@
-function [makespan] = makespan(orders, sequence)
+function [makespan] = fitness_calc(orders, sequence)
     % reordena os pedidos de acordo com a sequencia
     orders_unordered = orders;
     for i=1:length(sequence)

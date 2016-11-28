@@ -3,6 +3,6 @@ function [fitness] = fitness_of_population(input_data, population)
     fitness = zeros(1,pop_size);
     
     for i=1:pop_size
-        fitness(i) = makespan(input_data, population(i,:));
+        fitness(i) = fitness_calc(input_data, population(i,:));
     end
 end

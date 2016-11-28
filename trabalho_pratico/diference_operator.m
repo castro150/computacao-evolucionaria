@@ -1,5 +1,6 @@
 function [perm] = diference_operator(v1, v2)
     j = 1;
+    perm = [];
     for i=1:length(v1)
         if(v1(i) ~= v2(i))
             perm(j,1) = i;
@@ -10,5 +11,4 @@ function [perm] = diference_operator(v1, v2)
             j = j + 1;
         end
     end
-    display(perm)
 end

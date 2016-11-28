@@ -11,7 +11,7 @@ function [makespan, sequence, avg_fit, best_fit] = JSSP(filename)
     population  = pop_ini(norders,pop_size);
     new_pop     = zeros(pop_size,norders);
     mutant_pop     = zeros(pop_size,norders);
-    max_gen     = 5000;
+    max_gen     = 500;
     
     % Parametros do algoritmo de evolucao diferencial
     C = 0.8;
@@ -20,22 +20,20 @@ function [makespan, sequence, avg_fit, best_fit] = JSSP(filename)
     while((generation <= max_gen))%% Pensar no history && (mean(history) > 1e-3 || generation < 6))
         fitness = fitness_of_population(input_data, population);
         
+        delta = randi(pop_size,1);
         for i = 1:pop_size
             r1 = randi(pop_size,1);
             r2 = randi(pop_size,1);
             r3 = randi(pop_size,1);
-            delta = randi(norders,1);
 
             mu = rand(1);
-            for j = 1:norders
-                if((mu <= C)||(j == delta))
-                    mutant_pop(i,j) = population(r1,j) + F*(population(r2,j) - population(r3,j));
-                else
-                    mutant_pop(i,j) = population(i,j);
-                end
+            if((mu <= C)||(i == delta))
+                mutant_pop(i,:) = mutation(F, population(r1,:), population(r2,:), population(r3,:));
+            else
+                mutant_pop(i,:) = population(i,:);
             end
 
-            mutant_fitness = makespan(input_data, mutant_pop(i,:));
+            mutant_fitness = fitness_calc(input_data, mutant_pop(i,:));
             if(fitness(i) >= mutant_fitness)
                 new_pop(i,:) = mutant_pop(i,:);
                 fitness(i) = mutant_fitness;
