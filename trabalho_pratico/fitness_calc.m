@@ -1,3 +1,4 @@
+% Funcao para calcular o makespan dos pedidos em uma determinada sequencia
 function [makespan] = fitness_calc(orders, sequence)
     % reordena os pedidos de acordo com a sequencia
     orders_unordered = orders;

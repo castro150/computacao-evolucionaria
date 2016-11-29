@@ -1,3 +1,5 @@
+% Funcao que retorna o conjunto de permutacoes necessarias para transformar
+% v2 em v1
 function [perm] = diference_operator(v1, v2)
     j = 1;
     perm = [];
