@@ -86,9 +86,17 @@
 	Como resultado destas operações, tem-se um indivíduo recombinado. Esta técnica é de fácil implementação e possui boa eficiência. Mais detalhes sobre esta e outras abordagens podem ser vistos na Referência [3].
 	
 	\subsection{Critérios de Parada}
+	Como critérios de parada, primeiro estabeleceu-se um número máximo de de gerações como sendo 500, número este que pareceu razoável pelo ajuste de parâmetros que será descrito a seguir. Outro critério de parada baseia-se no histórico. %TODO descrever aqui o critério do histórico%
 	
+	\subsection{Ajustes de Parâmetros}
+	Como mencionado na seção \textit{Operadores de Cruzamento e Mutação}, um dos parâmetros do algoritmo é o $C$ que é a chance de um indivíduo na população mutante ser um indivíduo realmente mutante. Pode ser que seja adicionada à população mutante um indivíduo idêntico à população original, dependendo do valor de $C$. Este parâmetro foi ajustado com o valor de $0.8$, fazendo com que a população mutante criada a cada geração tenha uma grande quantidade de indivíduos mutantes, aumentando a abrangência de uma iteração, ou seja, de um teste sobre uma geração, envolvendo população original e população mutante.
+	
+	O parâmetro $F$, que representa o fator de escala, foi ajustado com o valor $0.9$, de forma a gerar um indivíduo com uma boa quantidade de permutações de valores partindo de um indivíduo base.
+	
+	Para o tamanho da população, achamos razoável utilizar o quadrado da quantidade de linhas da entrada, ou seja, o quadrado da quantidade de pedidos. Este valor foi utilizado por causa da variabilidade combinada com os outros parâmetros ajustados. É importante ressaltar que o tamanho populacional foi definido pensando que a entrada com maior quantidade de linhas que será passada ao algoritmo possui 25 linhas. Também é importante destacar que cada geração do algoritmo de \textit{Evolução Diferencial} não aumenta o tamanho da população, ou seja, este valor se mantém constante durante a execução do algoritmo.
 	
 	\subsection{Avaliação do Fitness}
+	%TODO fazer uma explicação rápida do fitness%
 	
 	\section{Referências}
 	\begin{enumerate}
