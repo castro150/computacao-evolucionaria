@@ -46,6 +46,9 @@ function [makespan, sequence, avg_fit, best_fit] = JSSP(filename)
         
         avg_fit(generation) = mean(fitness);
         best_fit(generation) = min(fitness);
+        makespan = min(fitness);
+        best_sequences = find(fitness==min(fitness));
+        sequence = population(best_sequences(1),:);
         generation = generation + 1;
     end
 end
