@@ -40,36 +40,37 @@
 	
 	Para este trabalho, considera-se que a linha de produção tem três etapas. Sendo assim, os arquivos de entrada contêm três colunas.
 
-	\section{O Algoritmo da Evolução Diferencial}
-	A seguir, na Figura \ref{fig:pseudo-code}, pode ser visto o pseudo-código do algoritmo de evolução diferencial implementado neste trabalho.
+	\section{Desenvolvimento}
+	Nesta seção serão apresentadas as decisões tomadas para a implementação de um algoritmo que soluciona o problema descrito na \textit{Introdução}.
 	
-	Este algoritmo foi implementado no MatLAB, e pode ser visto nos arquivos \textit{lab3\_peaks} e \textit{lab3\_rastrigin} anexos junto a este relatório.
+	\subsection{Representação de Indivíduos}
+	Para a decisão da forma de se representar indivíduos, primeiro é importante levar em consideração a entrada do algoritmo. Conforme especificações, a entrada é dada por arquivos textos no formato que pode ser visto na Figura \ref{fig:entrada}. Conforme descrito na \textit{Introdução}, cada linha representa um pedido, e cada coluna representa o tempo gasto em uma etapa de produção (máquina). Os arquivos \textit{entrada\_3.txt}, \textit{entrada\_10.txt} e \textit{entrada\_25.txt} foram disponibilizados junto à especificação deste trabalho.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=12cm]{img/entrada.png}
+		\caption{Exemplos de arquivos de entrada}
+		\label{fig:entrada}
+	\end{figure}
 	
-	\section{Testando com as funções peaks e rastrigin}
-	As funções \textit{peaks} e \textit{rastrigin} foram disponibilizadas e foram utilizadas para se testar o algoritmo da Evolução Diferencial. Para a função \textit{peaks}, as variáveis $x1$ e $x2$ estão ambas no intervalo $[-3; 3]$, e tem mínimo global em $f(x^*) = -6.5511$, onde $x^* = [0.228; -1.625]$. Já para a função \textit{rastrigin}, as variáveis $x1$ e $x2$ estão ambas no intervalo $[-2; 2]$, e tem mínimo global em $f(x^*) = -20$, onde $x^* = [0; 0]$. O algoritmo foi executado para a otimização de ambas as funções, e algumas iterações podem ser vistas nas Figuras \ref{fig:peaks} e \ref{fig:rastrigin}. O mínimo global da função peaks foi bem aproximado pelo algoritmo em estudo a partir da geração (iteração) 40. Já para a função rastrigin, o mínimo global foi bem aproximado a partir da geração 50.
+	Em virtude de este ser um problema combinatório cuja saída é uma sequência de produção dos pedidos, os indivíduos podem ser representados por uma sequência de Y números inteiros que vão de 1 até Y, onde Y é a quantidade de pedidos na entrada. Esta sequência é a que otimiza a produção dos pedidos em questão. Sendo assim, as soluções candidatas do problema são representadas por vetores de números inteiros.
 	
-	\pagebreak
+	\subsection{Algoritmo Evolucionários Escolhido}
+	Uma das técnicas e algoritmos estudados em sala de aula foi a chamada \textit{Evolução Diferencial}. Esta é uma técnica amplamente utilizada na solução de problemas através da Computação Evolucionária, possuindo alto desempenho e implementação simples. Sendo assim, esta foi a técnica usada como base para a implementação de uma algoritmo que soluciona o problema em questão neste trabalho.
+	
+	Conforme visto em sala, um pseudo-código para a \textit{Evolução Diferencial} pode ser observado na Figura \ref{fig:pseudo-code}. No código da figura, é importante se destacar a equação: 
+	\[u_{t,i,j} = x_{t,r1,j}+F(x_{t,r2,j}-x_{t,r3,j})\]
+	onde $u_{t,i,j}$ representa um indivíduo que sofreu mutação baseado na manipulação vetorial de outros três indivíduos selecionados aleatoriamente.
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=10cm]{img/pseudo-code.png}
-		\caption{Pseudo-código implementado}
+		\caption{Pseudo-código para a evolução diferencial}
 		\label{fig:pseudo-code}
 	\end{figure}
-	\begin{figure}[h]
-		\centering
-		\includegraphics[width=17cm]{img/peaks.png}
-		\caption{Interações do algoritmo para a função \textit{peaks} nas gerações 1, 20 e 40}
-		\label{fig:peaks}
-	\end{figure}
-	\begin{figure}[h]
-		\centering
-		\includegraphics[width=17cm]{img/rastrigin.png}
-		\caption{Interações do algoritmo para a função \textit{rastrigin} nas gerações 1, 25 e 50}
-		\label{fig:rastrigin}
-	\end{figure}
-	
 	\pagebreak
-	\section{Conclusão}
-	A partir dos resultados obtidos, pode-se concluir que para ambas as funções testadas o algoritmo da Evolução Diferencial obteve resultados bem precisos, e com relativamente poucas iterações do código. O algoritmo é bem intuitivo e foi de simples implementação. Conclui-se assim que os objetivos propostos pela tarefa foram cumpridos.
+	
+	\subsection{Operador de Seleção}
+	O operador de seleção de sobrevivência do algoritmo de evolução diferencial implementado pode ser visto na condicional \textbf{Se} $f(u_{t,i})<=f(x_{t,i})$ \textbf{então}. Nesta condicional, entende-se por $f(x)$ como a avaliação do \textit{fitness} de um indivíduo. Assim, um indivíduo mutante é selecionado se seu \textit{fitness} é menor que o \textit{fitness} de seu correspondente na população original.
+	
+	\subsection{Avaliação do Fitness}
 	
 \end{document}
