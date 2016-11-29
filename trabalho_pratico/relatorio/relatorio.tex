@@ -54,12 +54,12 @@
 	
 	Em virtude de este ser um problema combinatório cuja saída é uma sequência de produção dos pedidos, os indivíduos podem ser representados por uma sequência de Y números inteiros que vão de 1 até Y, onde Y é a quantidade de pedidos na entrada. Esta sequência é a que otimiza a produção dos pedidos em questão. Sendo assim, as soluções candidatas do problema são representadas por vetores de números inteiros.
 	
-	\subsection{Algoritmo Evolucionários Escolhido}
+	\subsection{Algoritmo Evolucionário Escolhido}
 	Uma das técnicas e algoritmos estudados em sala de aula foi a chamada \textit{Evolução Diferencial}. Esta é uma técnica amplamente utilizada na solução de problemas através da Computação Evolucionária, possuindo alto desempenho e implementação simples. Sendo assim, esta foi a técnica usada como base para a implementação de uma algoritmo que soluciona o problema em questão neste trabalho.
 	
 	Conforme visto em sala, um pseudo-código para a \textit{Evolução Diferencial} pode ser observado na Figura \ref{fig:pseudo-code}. No código da figura, é importante se destacar a equação: 
 	\[u_{t,i,j} = x_{t,r1,j}+F(x_{t,r2,j}-x_{t,r3,j})\]
-	onde $u_{t,i,j}$ representa um indivíduo que sofreu mutação baseado na manipulação vetorial de outros três indivíduos selecionados aleatoriamente.
+	onde $u_{t,i,j}$ representa um indivíduo que sofreu mutação baseado na manipulação vetorial de outros três indivíduos selecionados aleatoriamente. O algoritmo diferencial puro, conforme o representado, é diretamente utilizado para problemas envolvendo otimização contínua. Para problemas combinatórios, como é o caso, adaptações precisam ser feitas, e serão descritas mais a diante.
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=10cm]{img/pseudo-code.png}
@@ -71,6 +71,30 @@
 	\subsection{Operador de Seleção}
 	O operador de seleção de sobrevivência do algoritmo de evolução diferencial implementado pode ser visto na condicional \textbf{Se} $f(u_{t,i})<=f(x_{t,i})$ \textbf{então}. Nesta condicional, entende-se por $f(x)$ como a avaliação do \textit{fitness} de um indivíduo. Assim, um indivíduo mutante é selecionado se seu \textit{fitness} é menor que o \textit{fitness} de seu correspondente na população original.
 	
+	\subsection{Operadores de Cruzamento e Mutação}
+	No algoritmo da \textit{Evolução Diferencial}, tanto o cruzamento quanto a mutação podem ser representados pela equação: 
+	\[u_{t,i,j} = x_{t,r1,j}+F(x_{t,r2,j}-x_{t,r3,j})\]
+	já evidenciada na seção \textit{Algoritmo Evolucionário Escolhido}, junto com a condicional que a cerca, a recombinação discreta. Os parâmetros para tal procedimento são o $C$, representado uma taxa de recombinação, ou seja, uma probabilidade de um indivíduo de uma população mutante ser idêntico a um indivíduo da população original, ou ser um indivíduo mutante de fato; e $F$, que é um fator de escala aplicado ao vetor de diferenças $x_{t,r2,j}-x_{t,r3,j}$.
+	
+	É importante salientar que a \textit{Evolução Diferencial} seguindo o algoritmo da Figura \ref{fig:pseudo-code} é amplamente utilizada em problemas que envolvem variáveis reais, otimização contínua. Para problemas combinatórios, existem em estudo diversas abordagens e adaptações do mecanismo de cruzamento e mutação. Neste trabalho, optou-se pela abordagem da \textit{Lista de Movimentos}, que é derivada diretamente da equação $u_{t,i,j} = x_{t,r1,j}+F(x_{t,r2,j}-x_{t,r3,j})$. As operações da equação são adaptadas de forma a se encaixar em problemas combinatórios, conforme o descrito a seguir:
+	\begin{itemize}
+		\item Subtração: como no problema em questão os indivíduos são vetores combinatórios, a subtração é dada por uma lista de movimentos que, se aplicada no primeiro vetor, chega-se ao segundo.
+		\item Multiplicação: neste caso, devido ao que foi descrito pela subtração, a multiplicação ocorre entre um escalar e uma lista de movimentos. Assim, defini-se a multiplicação como sendo a seleção de alguns movimentos da lista de movimentos a que se multiplica.
+		\item Adição: neste caso, estamos adicionando a um vetor combinatório uma lista de movimentos; ou seja, está-se aplicando a este vetor uma dada quantidade de movimentos.
+	\end{itemize}
+	
+	Como resultado destas operações, tem-se um indivíduo recombinado. Esta técnica é de fácil implementação e possui boa eficiência. Mais detalhes sobre esta e outras abordagens podem ser vistos na Referência [3].
+	
+	\subsection{Critérios de Parada}
+	
+	
 	\subsection{Avaliação do Fitness}
+	
+	\section{Referências}
+	\begin{enumerate}
+		\item Especificação do trabalho
+		\item Notas de aula: \textit{Algoritmo de Evolução Diferencial} - CASTRO, Cristiano
+		\item \textit{Uma Nova Abordagem Para A Evolução Diferencial Em Otimização Discreta} - PRADO, Ricardo Sérgio. Disponível em http://www.eletrica.ufpr.br/anais/cba/2010/Artigos/65881\_1.pdf
+	\end{enumerate}
 	
 \end{document}
